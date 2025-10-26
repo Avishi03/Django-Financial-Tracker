@@ -1,0 +1,42 @@
+{% extends "finance/base.html" %}
+{% block title %}Login{% endblock title %}
+{% block content %}
+<div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full space-y-8 bg-white p-8 rounded-xl shadow-lg"> 
+        <div>
+            <h2 class="text-3xl font-bold  text-gray-900 text-center">Finance Tracker</h2>
+            <p class="mt-2 text-sm text-center text-gray-600 ">Please 
+            sign in your account</p>
+        </div>
+        <form method="post" class="space-y-6">
+            {% csrf_token %}
+            <div>
+                <label class="block text-grey-700 font-semibold mb-2"
+                for="id_username">Username</label>
+                <input type="text" id="id_username" name="username" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Enter your username" required>
+                {% if form.username.errors %} <p class="text-red-500 text-sm mt-1"> {{form.username.errors.0}}</p>
+                {% endif %}
+            </div>
+            <div>
+                <label class="block text-grey-700 font-semibold mb-2"
+                for="id_password">Password</label>
+                <input type="password" id="id_password" name="password" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Enter your password" required>
+                {% if form.password.errors %} <p class="text-red-500 text-sm mt-1"> {{form.password.errors.0}}</p>
+                {% endif %}
+            </div>
+            {% if form.non_field_errors %}
+              <div class="text-red-600 text-sm">
+                {% for error in form.non_field_errors %}
+                  <p>{{error}}</p>
+                {% endfor %}
+            {% endif %}
+            <div>
+                <button type="submit" class="w-full flex justify-center px-4 border border-transparent bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-lg transition ease-in-out">
+                    Sign In
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock content %}
