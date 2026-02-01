@@ -106,71 +106,64 @@ python manage.py migrate
 Reloaded from PythonAnywhere Web dashboard
 
 
-##Local Installation
-###Prerequisites
+## 💻 Local Installation
 
-Python 3.8+
+### Prerequisites
+- Python 3.8+
+- pip (Python package manager)
 
-pip
-
-Clone Repository
-git clone <repository-url>
+### Clone Repository
+```bash
+git clone 
 cd Django-Financial-Tracker/djfintracker
+```
 
-Create Virtual Environment
+### Create Virtual Environment
+```bash
 python -m venv venv
 source venv/bin/activate   # Linux / Mac
 venv\Scripts\activate      # Windows
+```
 
-Install Dependencies
+### Install Dependencies
+```bash
 pip install -r requirements.txt
+```
 
-Apply Migrations
+### Apply Migrations
+```bash
 python manage.py migrate
+```
 
-Run Development Server
+### Run Development Server
+```bash
 python manage.py runserver
+```
 
-
-Application will be available at:
-
+The application will be available at:
+```
 http://127.0.0.1:8000/
+```
 
-🔑 Key URLs
+## 🔑 Key URLs
+- `/` or `/finance/` – Dashboard
+- `/finance/register/` – User Registration
+- `/accounts/login/` – Login
+- `/finance/transaction/` – Transactions
+- `/finance/goal/` – Goals
+- `/finance/report/` – Reports
+- `/admin/` – Django Admin
 
-/ or /finance/ – Dashboard
-
-/finance/register/ – User Registration
-
-/accounts/login/ – Login
-
-/finance/transaction/ – Transactions
-
-/finance/goal/ – Goals
-
-/finance/report/ – Reports
-
-/admin/ – Django Admin
-
-🔒 Security Notes
-
+## 🔒 Security Notes
 Before deploying to production:
+- Change `SECRET_KEY`
+- Set `DEBUG = False`
+- Configure `ALLOWED_HOSTS`
+- Enable HTTPS
+- Configure static files properly
 
-Change SECRET_KEY
-
-Set DEBUG = False
-
-Configure ALLOWED_HOSTS
-
-Enable HTTPS
-
-Configure static files properly
-
-📄 License
-
+## 📄 License
 MIT License
 
-👩‍💻 Author
-
+## 👩‍💻 Author
 Avishi
-
