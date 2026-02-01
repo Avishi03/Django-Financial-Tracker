@@ -1,28 +1,109 @@
-<!-- for common code -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,
-    initial-scale=1.0"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <title>{% block title %}{% endblock title %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>{% block title %}Financial Tracker{% endblock title %}</title>
+    <style>
+        .fade-in {
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
-<body class="bg-gray-100">
- <nav class="bg-indigo-500 p-4 text-white">
-    {% if user.is_authenticated%}
-    <a href="{%url 'dashboard' %}" class="mx-4S">Dashboard</a>
-    <a href="{%url 'transaction_add' %}">Add Transaction</a>
-    <a href="{%url 'transaction_list' %}" class="mx-4S">Transactions</a>
-      <form id="logout-form" action="{%url 'logout' %}"
-      method="POST" style="document.getElementById ('logout-form').submit();" class="ml-4">logout</a>
-      </form>
-    {% else %}
-      <a href="{% url "login" %}" class="ml-4"> Login</a>
-      <a href="{% url "register" %}" class="ml-4"> Register</a>
-    {% endif %}
- </nav>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-gradient-to-r from-indigo-600 to-purple-600 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-8">
+                    <a href="{% url 'dashboard' %}" class="text-white text-xl font-bold">
+                        <i class="fas fa-wallet mr-2"></i>Financial Tracker
+                    </a>
+                    {% if user.is_authenticated %}
+                    <div class="hidden md:flex space-x-4">
+                        <a href="{% url 'dashboard' %}" class="text-white hover:text-indigo-200 px-3 py-2 rounded-md text-sm font-medium transition">
+                            <i class="fas fa-home mr-1"></i>Dashboard
+                        </a>
+                        <a href="{% url 'transaction_list' %}" class="text-white hover:text-indigo-200 px-3 py-2 rounded-md text-sm font-medium transition">
+                            <i class="fas fa-list mr-1"></i>Transactions
+                        </a>
+                        <a href="{% url 'transaction_add' %}" class="text-white hover:text-indigo-200 px-3 py-2 rounded-md text-sm font-medium transition">
+                            <i class="fas fa-plus mr-1"></i>Add Transaction
+                        </a>
+                        <a href="{% url 'goal_list' %}" class="text-white hover:text-indigo-200 px-3 py-2 rounded-md text-sm font-medium transition">
+                            <i class="fas fa-bullseye mr-1"></i>Goals
+                        </a>
+                        <a href="{% url 'report' %}" class="text-white hover:text-indigo-200 px-3 py-2 rounded-md text-sm font-medium transition">
+                            <i class="fas fa-chart-bar mr-1"></i>Reports
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="flex items-center space-x-4">
+                    {% if user.is_authenticated %}
+                    <span class="text-white text-sm">
+                        <i class="fas fa-user mr-1"></i>{{ user.username }}
+                    </span>
+                    <form method="post" action="{% url 'logout' %}" class="inline">
+                        {% csrf_token %}
+                        <button type="submit" class="text-white hover:text-indigo-200 px-3 py-2 rounded-md text-sm font-medium transition">
+                            <i class="fas fa-sign-out-alt mr-1"></i>Logout
+                        </button>
+                    </form>
+                    {% else %}
+                    <a href="{% url 'login' %}" class="text-white hover:text-indigo-200 px-3 py-2 rounded-md text-sm font-medium transition">
+                        <i class="fas fa-sign-in-alt mr-1"></i>Login
+                    </a>
+                    <a href="{% url 'register' %}" class="bg-white text-indigo-600 hover:bg-indigo-50 px-4 py-2 rounded-md text-sm font-medium transition">
+                        <i class="fas fa-user-plus mr-1"></i>Register
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
 
- {% block content %}{% endblock content %}
+    <!-- Messages -->
+    {% if messages %}
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} mb-4 p-4 rounded-lg shadow-md fade-in {% if message.tags == 'error' %}bg-red-100 border-l-4 border-red-500 text-red-700{% elif message.tags == 'success' %}bg-green-100 border-l-4 border-green-500 text-green-700{% elif message.tags == 'warning' %}bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700{% else %}bg-blue-100 border-l-4 border-blue-500 text-blue-700{% endif %}" role="alert">
+            <div class="flex items-center">
+                {% if message.tags == 'error' %}
+                <i class="fas fa-exclamation-circle mr-2"></i>
+                {% elif message.tags == 'success' %}
+                <i class="fas fa-check-circle mr-2"></i>
+                {% elif message.tags == 'warning' %}
+                <i class="fas fa-exclamation-triangle mr-2"></i>
+                {% else %}
+                <i class="fas fa-info-circle mr-2"></i>
+                {% endif %}
+                <span>{{ message }}</span>
+                <button onclick="this.parentElement.parentElement.remove()" class="ml-auto text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {% block content %}{% endblock content %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white mt-12 py-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-sm">&copy; 2024 Financial Tracker. All rights reserved.</p>
+        </div>
+    </footer>
 </body>
 </html>

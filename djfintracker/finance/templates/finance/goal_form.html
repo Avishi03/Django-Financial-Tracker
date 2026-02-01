@@ -1,0 +1,75 @@
+{% extends "finance/base.html" %}
+{% block title %}{% if goal %}Edit Goal{% else %}Add Goal{% endif %}{% endblock title %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto fade-in">
+    <div class="bg-white rounded-xl shadow-lg p-8">
+        <div class="text-center mb-6">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">
+                <i class="fas {% if goal %}fa-edit{% else %}fa-bullseye{% endif %} mr-2 text-indigo-600"></i>
+                {% if goal %}Edit Goal{% else %}Create New Goal{% endif %}
+            </h1>
+            <p class="text-gray-600">Set a financial goal and track your progress</p>
+        </div>
+
+        <form method="post" class="space-y-6">
+            {% csrf_token %}
+            
+            <!-- Goal Name Field -->
+            <div>
+                <label class="block text-gray-700 font-semibold mb-2" for="name">
+                    <i class="fas fa-tag mr-1 text-indigo-600"></i>Goal Name
+                </label>
+                <input type="text" id="name" name="name" value="{% if form.name.value %}{{ form.name.value }}{% endif %}" 
+                       class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" 
+                       placeholder="e.g., Vacation Fund, Emergency Fund" required>
+                {% if form.name.errors %}
+                <p class="text-red-500 text-sm mt-1">{{ form.name.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Target Amount Field -->
+            <div>
+                <label class="block text-gray-700 font-semibold mb-2" for="target_amount">
+                    <i class="fas fa-dollar-sign mr-1 text-indigo-600"></i>Target Amount
+                </label>
+                <input type="number" id="target_amount" name="target_amount" step="0.01" min="0.01" 
+                       value="{% if form.target_amount.value %}{{ form.target_amount.value }}{% endif %}"
+                       class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" 
+                       placeholder="0.00" required>
+                {% if form.target_amount.errors %}
+                <p class="text-red-500 text-sm mt-1">{{ form.target_amount.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Deadline Field -->
+            <div>
+                <label class="block text-gray-700 font-semibold mb-2" for="deadline">
+                    <i class="fas fa-calendar-alt mr-1 text-indigo-600"></i>Deadline
+                </label>
+                <input type="date" id="deadline" name="deadline" 
+                       value="{% if form.deadline.value %}{{ form.deadline.value }}{% endif %}"
+                       min="{% now 'Y-m-d' %}" 
+                       class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" 
+                       required>
+                {% if form.deadline.errors %}
+                <p class="text-red-500 text-sm mt-1">{{ form.deadline.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Submit Button -->
+            <div class="flex space-x-4 pt-4">
+                <button type="submit" 
+                        class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-lg transition shadow-md">
+                    <i class="fas fa-save mr-2"></i>
+                    {% if goal %}Update Goal{% else %}Create Goal{% endif %}
+                </button>
+                <a href="{% url 'goal_list' %}" 
+                   class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-3 px-6 rounded-lg transition text-center">
+                    <i class="fas fa-times mr-2"></i>Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}
