@@ -91,6 +91,17 @@ if db_url and db_url.strip():
         conn_max_age=600,
         conn_health_checks=True,
     )
+else:
+    # If no Postgres DB is configured, Vercel throws Read-Only errors for SQLite.
+    # To fix this, we map the SQLite DB to the writable /tmp partition on Vercel Lambdas.
+    import shutil
+    if os.environ.get('VERCEL') == '1':
+        tmp_db_path = '/tmp/db.sqlite3'
+        if not os.path.exists(tmp_db_path):
+            original_db = os.path.join(BASE_DIR, 'db.sqlite3')
+            if os.path.exists(original_db):
+                shutil.copy2(original_db, tmp_db_path)
+        DATABASES['default']['NAME'] = tmp_db_path
 
 
 # Password validation
