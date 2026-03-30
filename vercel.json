@@ -2,14 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "djfintracker/build_files.sh",
+      "src": "build_files.sh",
       "use": "@vercel/static-build",
       "config": {
         "distDir": "staticfiles_build"
       }
     },
     {
-      "src": "djfintracker/wsgi.py",
+      "src": "djfintracker/djfintracker/wsgi.py",
       "use": "@vercel/python",
       "config": {
         "maxLambdaSize": "15mb",
@@ -24,7 +24,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "djfintracker/wsgi.py"
+      "dest": "djfintracker/djfintracker/wsgi.py"
     }
   ]
 }
