@@ -3,7 +3,7 @@
 A comprehensive web-based financial tracking application built with Django that helps users manage their income, expenses, and financial goals.
 
 🌐 **Live Application**  
-👉 https://avishi03.pythonanywhere.com
+👉 https://financialtracker-ebon.vercel.app/
 
 ---
 
@@ -54,10 +54,10 @@ A comprehensive web-based financial tracking application built with Django that 
 
 ## 🌐 Cloud Deployment (PythonAnywhere)
 
-This application is deployed and publicly accessible.
+This application is deployed on vercel and publicly accessible.
 
 🔗 **Live URL**
-https://avishi03.pythonanywhere.com
+https://financialtracker-ebon.vercel.app/
 
 
 ### Deployment Steps Followed
