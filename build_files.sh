@@ -1,6 +1,8 @@
 #!/bin/bash
-# Install requirements
-python3.12 -m pip install -r requirements.txt
-
-# Run collectstatic
-python3.12 djfintracker/manage.py collectstatic --noinput
+set -e
+echo "Installing pip..."
+python3 -m pip install --upgrade pip
+echo "Installing requirements..."
+python3 -m pip install -r requirements.txt
+echo "Running collectstatic..."
+python3 djfintracker/manage.py collectstatic --noinput
