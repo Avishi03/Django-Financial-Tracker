@@ -9,7 +9,7 @@
       }
     },
     {
-      "src": "djfintracker/djfintracker/wsgi.py",
+      "src": "vercel_wsgi.py",
       "use": "@vercel/python",
       "config": {
         "maxLambdaSize": "15mb",
@@ -24,7 +24,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "djfintracker/djfintracker/wsgi.py"
+      "dest": "vercel_wsgi.py"
     }
   ]
 }

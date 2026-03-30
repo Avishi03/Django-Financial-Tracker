@@ -26,12 +26,7 @@ SECRET_KEY = 'django-insecure-bbpdsxrvv8c4w3tq-lb)ikr#$)5b1$q$$qghah&9b%4)^qmx_v
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    'avishi03.pythonanywhere.com',   # keep existing
-    '.vercel.app',                   # all Vercel preview/prod domains
-    'localhost',
-    '127.0.0.1',
-]
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -88,9 +83,11 @@ DATABASES = {
     }
 }
 
-# Override with DATABASE_URL if provided
-if 'DATABASE_URL' in os.environ:
-    DATABASES['default'] = dj_database_url.config(
+# Override with DATABASE_URL if provided and not empty
+db_url = os.environ.get('DATABASE_URL')
+if db_url and db_url.strip():
+    DATABASES['default'] = dj_database_url.parse(
+        db_url,
         conn_max_age=600,
         conn_health_checks=True,
     )

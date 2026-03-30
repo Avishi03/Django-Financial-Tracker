@@ -6,3 +6,5 @@ echo "Installing requirements..."
 python3 -m pip install -r requirements.txt --break-system-packages
 echo "Running collectstatic..."
 python3 djfintracker/manage.py collectstatic --noinput
+echo "Applying database migrations..."
+python3 djfintracker/manage.py migrate --noinput
